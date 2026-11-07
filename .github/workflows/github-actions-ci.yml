@@ -16,6 +16,7 @@ jobs:
     env:
       SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
       SHOPIFY_STOREFRONT_ACCESS_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_ACCESS_TOKEN }}
+      NEXT_TELEMETRY_DISABLED: "1"
 
     steps:
       - uses: actions/checkout@v4
@@ -40,13 +41,31 @@ jobs:
       - name: Test catalog logic
         run: npx playwright test --config=playwright.unit.config.ts
 
+      - name: Detect Shopify credentials
+        id: shopify-creds
+        shell: bash
+        run: |
+          if [[ -n "${SHOPIFY_STORE_DOMAIN}" && -n "${SHOPIFY_STOREFRONT_ACCESS_TOKEN}" ]]; then
+            echo "has_secrets=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_secrets=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip Shopify-dependent checks when credentials are missing
+        if: steps.shopify-creds.outputs.has_secrets != 'true'
+        run: |
+          echo "Skipping build and Shopify-dependent E2E checks because SHOPIFY_STORE_DOMAIN or SHOPIFY_STOREFRONT_ACCESS_TOKEN is not configured in repository secrets."
+
       - name: Build
+        if: steps.shopify-creds.outputs.has_secrets == 'true'
         run: npm run build
 
       - name: Install Playwright browsers
+        if: steps.shopify-creds.outputs.has_secrets == 'true'
         run: npx playwright install --with-deps
 
       - name: Test shop interactions and responsive navigation
+        if: steps.shopify-creds.outputs.has_secrets == 'true'
         run: npx playwright test tests/shop.spec.ts tests/responsive.spec.ts
 
       - name: Upload Playwright results

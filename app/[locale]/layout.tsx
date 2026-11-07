@@ -4,7 +4,6 @@ import {
   Playfair_Display,
   Roboto,
   Carlito,
-  Plus_Jakarta_Sans,
 } from "next/font/google";
 import "../globals.css";
 import Footer from "@/components/layout/Footer";
@@ -46,13 +45,6 @@ const bodoni = localFont({
   src: "../../public/fonts/bodoni-moda-variable.woff2",
   weight: "500 600",
   variable: "--font-bodoni",
-  display: "swap",
-});
-
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jakarta",
   display: "swap",
 });
 
@@ -106,7 +98,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${geistGaramond.variable} ${geistPlayfairDisplay.variable} ${geistRoboto.variable} ${geistCarlito.variable} ${jakarta.variable} ${bodoni.variable} ${magister.variable} flex min-h-svh flex-col antialiased`}
+        className={`${geistGaramond.variable} ${geistPlayfairDisplay.variable} ${geistRoboto.variable} ${geistCarlito.variable} ${bodoni.variable} ${magister.variable} flex min-h-svh flex-col antialiased`}
       >
         <Navbar />
 

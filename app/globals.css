@@ -67,7 +67,7 @@
   --font-playfair-display: var(--font-playfair-display);
   --font-roboto: var(--font-roboto);
   --font-carlito: var(--font-carlito);
-  --font-jakarta: var(--font-jakarta);
+  --font-jakarta: var(--font-roboto);
   --font-bodoni: var(--font-bodoni);
   --font-magister: var(--font-magister);
 }
