@@ -8,10 +8,8 @@ A custom, multilingual e-commerce application built for Arabian Fragrance, a per
 
 This repository is my portfolio copy of the project delivered to the client. The client website is maintained separately and may evolve beyond the version shown here.
 
-<!-- Add a CURRENT desktop screenshot here once captured:
-![Arabian Fragrance storefront](docs/images/storefront-desktop.webp)
-Do not reuse the legacy public/*-preview.png images without checking them.
--->
+![Arabian Fragrance storefront](docs/images/storefront-desktop.png)
+
 
 ## The project
 
@@ -46,21 +44,22 @@ My wider work with the business included catalog preparation, product informatio
 | Editorial content | Shopify-managed homepage sections, Our Story, showroom information, FAQ, policies and social links                               |
 | Localization      | English, Finnish and Swedish routes, UI labels and Shopify content queries                                                       |
 
-<!-- Add CURRENT screenshots after capturing them. These links intentionally stay
-commented out until the files exist, so the README has no broken images.
+
+### Catalog 
+![Product catalog with scent, gender and collection filters](docs/images/catalog.png)
 
 ### Catalog and filters
-![Product catalog with scent, gender and collection filters](docs/images/catalog-filters.webp)
+![Product catalog with scent, gender and collection filters](docs/images/catalog-filters.png)
 
 ### Product detail
-![Product gallery, fragrance notes and shopping actions](docs/images/product-detail.webp)
+![Product gallery, fragrance notes and shopping actions](docs/images/product-detail.png)
 
 ### Mobile experience
 <p>
-  <img src="docs/images/mobile-navigation.webp" alt="Mobile navigation" width="280" />
-  <img src="docs/images/mobile-product.webp" alt="Mobile product page" width="280" />
+  <img src="docs/images/mobile-navigation.png" alt="Mobile navigation" width="280" />
+  <img src="docs/images/mobile-product.png" alt="Mobile product page" width="280" />
 </p>
--->
+
 
 ## Engineering decisions
 
