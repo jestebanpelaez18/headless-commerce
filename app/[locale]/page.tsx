@@ -64,7 +64,7 @@ export default async function Home({ params }: PageProps) {
     title: dict.hero.title,
     subtitle: dict.hero.subtitle,
     desktopImage: {
-      url: "/hero/brand_hero.avif",
+      url: "/hero/brand-hero.avif",
       altText: null,
       width: 1920,
       height: 1080,
@@ -92,7 +92,7 @@ export default async function Home({ params }: PageProps) {
   const discoveryPromotion = shopifyDiscoveryPromotion ?? {
     title: dict.gift.title,
     description: dict.gift.description,
-    imageSrc: "/hero/the_discovery_section.jpg",
+    imageSrc: "/hero/the-discovery-section.jpg",
     imageAlt: "",
     ctaLabel: dict.gift.ctaLabel,
     ctaHref: `/${locale}/shop/discovery`,

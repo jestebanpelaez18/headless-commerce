@@ -53,7 +53,7 @@ const FALLBACK_COLLECTIONS: Record<
     luxury: { title: "Luxury Collection", imageSrc: "/shop/bottle-men.png" },
     premium: {
       title: "Premium Collection",
-      imageSrc: "/shop/premium_collection.png",
+      imageSrc: "/shop/premium-collection.png",
     },
     essential: {
       title: "Essential Collection",
@@ -64,7 +64,7 @@ const FALLBACK_COLLECTIONS: Record<
     luxury: { title: "Luxury-kokoelma", imageSrc: "/shop/bottle-men.png" },
     premium: {
       title: "Premium-kokoelma",
-      imageSrc: "/shop/premium_collection.png",
+      imageSrc: "/shop/premium-collection.png",
     },
     essential: {
       title: "Essential-kokoelma",
@@ -78,7 +78,7 @@ const FALLBACK_COLLECTIONS: Record<
     },
     premium: {
       title: "Premium-kollektionen",
-      imageSrc: "/shop/premium_collection.png",
+      imageSrc: "/shop/premium-collection.png",
     },
     essential: {
       title: "Essential-kollektionen",

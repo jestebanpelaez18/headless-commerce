@@ -10,7 +10,6 @@ This repository is my portfolio copy of the project delivered to the client. The
 
 ![Arabian Fragrance storefront](docs/images/storefront-desktop.png)
 
-
 ## The project
 
 Arabian Fragrance Company Ltd Oy needed an online store that combined an editorial brand presentation with practical product discovery. Customers needed to explore different fragrance formats, understand scent profiles and concentrations, and move from browsing to checkout on desktop or mobile.
@@ -44,22 +43,24 @@ My wider work with the business included catalog preparation, product informatio
 | Editorial content | Shopify-managed homepage sections, Our Story, showroom information, FAQ, policies and social links                               |
 | Localization      | English, Finnish and Swedish routes, UI labels and Shopify content queries                                                       |
 
+### Catalog
 
-### Catalog 
 ![Product catalog with scent, gender and collection filters](docs/images/catalog.png)
 
 ### Catalog and filters
+
 ![Product catalog with scent, gender and collection filters](docs/images/catalog-filters.png)
 
 ### Product detail
+
 ![Product gallery, fragrance notes and shopping actions](docs/images/product-detail.png)
 
 ### Mobile experience
+
 <p>
   <img src="docs/images/mobile-navigation.png" alt="Mobile navigation" width="280" />
   <img src="docs/images/mobile-product.png" alt="Mobile product page" width="280" />
 </p>
-
 
 ## Engineering decisions
 

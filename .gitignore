@@ -12,6 +12,9 @@
 
 # testing
 /coverage
+playwright-report/
+test-results/
+blob-report/
 
 # next.js
 /.next/
@@ -19,16 +22,6 @@
 
 # production
 /build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
 .env*
@@ -40,17 +33,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Estado local de desarrollo / test
+# local development/test state
 orders.processed.json
 stock.dev.json
 
-# Mapas de Stripe (no subas los de test)
+# Stripe maps (avoid committing test mappings)
 stripe.ids.json
-
-# Playwright
-playwright-report/
-test-results/
-blob-report/
 
 # IDEs
 .vscode/
@@ -58,10 +46,13 @@ blob-report/
 *.swp
 *.swo
 
-# Logs system 
+# logs and system files
 *.log
 npm-debug.log*
 yarn-debug.log*
+yarn-error.log*
 pnpm-debug.log*
+.pnpm-debug.log*
 .DS_Store
 Thumbs.db
+*.pem

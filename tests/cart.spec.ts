@@ -16,7 +16,7 @@ const ITEMS: CartFixture[] = [
     name: "Honey Musk",
     price: 70,
     qty: 1,
-    image: "/catalog/Bottle_3.png",
+    image: "/catalog/bottle-3.png",
   },
   {
     id: "gid://shopify/ProductVariant/900000002",
@@ -24,7 +24,7 @@ const ITEMS: CartFixture[] = [
     name: "Jamila",
     price: 100,
     qty: 1,
-    image: "/catalog/Bottle_3.png",
+    image: "/catalog/bottle-3.png",
   },
 ];
 

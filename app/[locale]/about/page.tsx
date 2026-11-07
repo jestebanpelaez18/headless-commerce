@@ -195,7 +195,7 @@ export default async function AboutPage({ params }: PageProps) {
     heroTitle: dict.aboutPage.heroTitle,
     heroSubtitle: dict.aboutPage.heroSubtitle,
     heroImage: {
-      url: "/about/aboutusPicture.jpg",
+      url: "/about/about-us-picture.jpg",
       altText: null,
       width: 1920,
       height: 1080,
@@ -219,7 +219,7 @@ export default async function AboutPage({ params }: PageProps) {
     },
     closingText: dict.aboutPage.fullImageParagraph,
     closingImage: {
-      url: "/about/aboutusPicture2.jpg",
+      url: "/about/about-us-picture-2.jpg",
       altText: null,
       width: 1920,
       height: 1080,

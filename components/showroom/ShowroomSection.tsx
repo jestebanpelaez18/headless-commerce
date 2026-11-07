@@ -15,7 +15,7 @@ type ShowroomSectionProps = {
 };
 
 export default function ShowroomSection({
-  imageSrc = "/showroom/example_shop.avif",
+  imageSrc = "/showroom/example-shop.avif",
   imageAlt,
   heading,
   description,
