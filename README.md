@@ -1,39 +1,148 @@
-# Arabian Fragrance
+# Headless Commerce — Arabian Fragrance
 
-Custom headless storefront for Arabian Fragrance, built with Next.js and Shopify Storefront API.
+A custom, multilingual e-commerce application built for Arabian Fragrance, a perfume brand based in Helsinki. Developed with **Next.js, TypeScript and Shopify**, from storefront implementation and catalog modeling to automated testing and production handover.
 
-Shopify manages the catalog and editable store content. This repository manages the storefront design, navigation, filtering, search and shopping bag. Checkout is created through Shopify and completed on Shopify's hosted checkout.
+**Developer:** [Juan Esteban Pelaez Hoyos](https://github.com/jestebanpelaez18) · **Role:** Full Stack Developer
 
-**Website:** https://wantafc.com  
-**Hosting:** Vercel
+[Client website](https://wantafc.com) · [Technical guide](docs/technical-guide.md) · [Code walkthrough](#code-walkthrough)
+
+This repository is my portfolio copy of the project delivered to the client. The client website is maintained separately and may evolve beyond the version shown here.
+
+<!-- Add a CURRENT desktop screenshot here once captured:
+![Arabian Fragrance storefront](docs/images/storefront-desktop.webp)
+Do not reuse the legacy public/*-preview.png images without checking them.
+-->
+
+## The project
+
+Arabian Fragrance Company Ltd Oy needed an online store that combined an editorial brand presentation with practical product discovery. Customers needed to explore different fragrance formats, understand scent profiles and concentrations, and move from browsing to checkout on desktop or mobile.
+
+The business also needed to update its catalog and editorial content through Shopify. I built the storefront independently of Shopify themes and connected it to Shopify's commerce and content APIs. This gave the brand a custom interface while keeping products, prices, availability and connected content manageable by the store team.
+
+## My contribution
+
+I was responsible for the storefront application and its Shopify integration, including:
+
+- Translating the brand direction into responsive page layouts, navigation and reusable components.
+- Structuring product data and metafields for fragrance notes, concentration, ingredients and product relationships.
+- Implementing catalog browsing, URL-based filters, ranked search, product recommendations and fragrance layering sections.
+- Building the persistent shopping bag and the server endpoint that creates the checkout flow through Shopify's Cart API.
+- Connecting homepage sections, brand pages, policies and social links to editable Shopify content.
+- Implementing English, Finnish and Swedish routes, localized interface text and product metadata.
+- Adding automated checks, unit and browser tests, deployment configuration and technical documentation for handover.
+
+My wider work with the business included catalog preparation, product information, supplier coordination and sales training materials. Working directly with the products helped me translate fragrance terminology and store operations into the application's data model and shopping experience.
+
+## Storefront experience
+
+| Area              | Implementation                                                                                                                   |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Product discovery | Dedicated catalogs for perfumes, oils and attars, body mists, discovery sets and perfume collections                             |
+| Catalog filtering | Scent profile, gender and collection selections represented in URL query parameters, with filter counts and empty states         |
+| Search            | Ranked matches across names, fragrance notes, collections, product types and gender, with aliases across the supported languages |
+| Product pages     | Image galleries, fragrance notes, concentration, ingredients, layering suggestions and related products                          |
+| Shopping bag      | Persistent quantities and subtotals, with drawer and full-page views                                                             |
+| Checkout          | Server-created Shopify cart followed by Shopify-hosted checkout                                                                  |
+| Editorial content | Shopify-managed homepage sections, Our Story, showroom information, FAQ, policies and social links                               |
+| Localization      | English, Finnish and Swedish routes, UI labels and Shopify content queries                                                       |
+
+<!-- Add CURRENT screenshots after capturing them. These links intentionally stay
+commented out until the files exist, so the README has no broken images.
+
+### Catalog and filters
+![Product catalog with scent, gender and collection filters](docs/images/catalog-filters.webp)
+
+### Product detail
+![Product gallery, fragrance notes and shopping actions](docs/images/product-detail.webp)
+
+### Mobile experience
+<p>
+  <img src="docs/images/mobile-navigation.webp" alt="Mobile navigation" width="280" />
+  <img src="docs/images/mobile-product.webp" alt="Mobile product page" width="280" />
+</p>
+-->
+
+## Engineering decisions
+
+### A custom storefront with Shopify-managed commerce
+
+Next.js owns the interface, routes and presentation. Shopify provides catalog data, product relationships, editable content and checkout. The integration uses GraphQL queries, product mapping functions and dedicated content readers rather than coupling components directly to a Shopify theme.
+
+Server-rendered routes fetch product and editorial content. Client components handle interactions such as filter panels, search overlays and the shopping bag.
+
+### Stable catalog behavior across languages
+
+Translated product fields can change the values used by filters. The catalog keeps canonical classification values separate from translated display text and normalizes supported aliases. This allows customers to browse localized content while filter behavior remains consistent.
+
+### Search built around fragrance discovery
+
+Search goes beyond matching product titles. A deterministic ranking function weights title matches above notes, collections and other fields. It normalizes accents and recognizes aliases such as English, Finnish and Swedish scent terms. Every meaningful query word must match, which helps avoid loosely related results.
+
+### Two distinct approaches to related products
+
+Related-product recommendations rank products of the same type by shared scent accords, collection membership and gender affinity, with stable tie-breaking. Layering suggestions use relationships managed in Shopify, allowing the store team to select complementary products explicitly.
+
+### Editable content with controlled presentation
+
+Shopify metaobjects supply structured content for the homepage, Our Story and showroom pages. Shopify pages and policies supply longer content, with HTML sanitization before rendering. Selected editorial sections have local fallbacks when remote content is unavailable.
+
+Colors, typography and responsive layouts remain in the codebase, so content editing and visual design have clear responsibilities.
+
+### A small client-side bag with server-created checkout
+
+Zustand persists the shopping bag in browser storage. At checkout, the frontend sends variant identifiers and quantities to a Next.js route handler, which creates a Shopify cart and returns its checkout URL. Payment collection is handled by Shopify's hosted checkout.
 
 ## Technology
 
-- Next.js 16 with App Router and React 19
-- TypeScript
-- Tailwind CSS 4
-- Zustand for persistent shopping bag state
-- Shopify Storefront API through GraphQL
-- Playwright for unit and browser tests
-- ESLint, Prettier and TypeScript checks
+| Layer                | Tools                                                       |
+| -------------------- | ----------------------------------------------------------- |
+| Application          | Next.js 16 App Router, React 19, TypeScript                 |
+| Styling              | Tailwind CSS 4, custom typography and responsive components |
+| Commerce and content | Shopify Storefront API, GraphQL, metafields and metaobjects |
+| Client state         | Zustand with local storage persistence                      |
+| Content sanitization | sanitize-html                                               |
+| Testing              | Playwright unit tests and browser tests                     |
+| Quality checks       | ESLint, Prettier, TypeScript and GitHub Actions             |
+| Hosting              | Vercel                                                      |
 
-Supported locales are English (`en`), Finnish (`fi`) and Swedish (`sv`). English is the default.
+## Testing and quality
 
-## Local development
+The repository includes unit tests for catalog filtering and HTML sanitization, plus browser tests for catalog interactions, search, product pages, the shopping bag, translations and responsive navigation.
 
-Use Node.js 20 to match the current GitHub Actions workflow.
+The browser configuration covers desktop Chromium and Firefox, mobile WebKit with iPhone emulation, and mobile Chromium with Pixel emulation. These are browser/device emulation projects rather than physical-device tests.
 
-### 1. Install dependencies
+GitHub Actions runs lint, formatting checks, TypeScript checks, unit tests, a production build and a selected browser suite covering shop interactions and responsive navigation. Playwright reports and failure artifacts support investigation.
+
+Browser tests depend on Shopify-backed content, so catalog changes can affect their expectations.
+
+## Code walkthrough
+
+These files are useful starting points for reviewing the implementation:
+
+| File                                                             | What to look at                                         |
+| ---------------------------------------------------------------- | ------------------------------------------------------- |
+| [`lib/shop/catalog-filters.ts`](lib/shop/catalog-filters.ts)     | Parsing, validating and combining URL filter selections |
+| [`lib/shop/search.ts`](lib/shop/search.ts)                       | Multilingual aliases and weighted product ranking       |
+| [`lib/shop/recommendations.ts`](lib/shop/recommendations.ts)     | Deterministic product recommendations                   |
+| [`lib/shopify/mapper.ts`](lib/shopify/mapper.ts)                 | Converting Shopify fields into the shared product model |
+| [`lib/shopify/get-about-page.ts`](lib/shopify/get-about-page.ts) | Reading structured editorial content from Shopify       |
+| [`lib/cart/store.ts`](lib/cart/store.ts)                         | Shopping bag state and persistence                      |
+| [`app/api/checkout/route.ts`](app/api/checkout/route.ts)         | Creating a Shopify cart from variant IDs and quantities |
+| [`lib/sanitize-shopify-html.ts`](lib/sanitize-shopify-html.ts)   | Sanitizing Shopify page and policy HTML                 |
+| [`tests/unit/`](tests/unit/)                                     | Isolated catalog and sanitization tests                 |
+| [`tests/responsive.spec.ts`](tests/responsive.spec.ts)           | Responsive navigation regression tests                  |
+
+Product routes also generate metadata and Product JSON-LD for search engines.
+
+## Running locally
+
+Use Node.js 20 to match the existing CI workflow.
 
 ```bash
 npm ci
 ```
 
-### 2. Configure environment variables
-
-Production environment variables are configured in Vercel. They are not automatically available on your computer.
-
-To run the project locally, create `.env.local` in the project root, alongside `package.json`:
+Create `.env.local` in the project root using a Shopify store you are authorized to access:
 
 ```dotenv
 SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
@@ -41,293 +150,44 @@ SHOPIFY_STOREFRONT_ACCESS_TOKEN=your-storefront-access-token
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-Replace the Shopify placeholders with the values provided by the project administrator.
-
-| Variable                          | Local development                          | Vercel production      |
-| --------------------------------- | ------------------------------------------ | ---------------------- |
-| `SHOPIFY_STORE_DOMAIN`            | Shopify store hostname, without `https://` | Shopify store hostname |
-| `SHOPIFY_STOREFRONT_ACCESS_TOKEN` | Storefront API token                       | Configured in Vercel   |
-| `NEXT_PUBLIC_SITE_URL`            | `http://localhost:3000`                    | `https://wantafc.com`  |
-
-- `SHOPIFY_STORE_DOMAIN` identifies the Shopify backend, using its `.myshopify.com` hostname.
-- `NEXT_PUBLIC_SITE_URL` is used for site metadata and absolute URLs. It does not configure domain ownership or DNS.
-- `localhost:3000` is the address of the application running on your computer. It does not change the public website.
-- Never commit `.env.local` or credentials to the repository.
-
-Shopify access is required to load the catalog and editable content. Some editorial sections have local fallbacks, but these do not replace a configured Shopify connection.
-
-### 3. Start the application
-
 ```bash
 npm run dev
 ```
 
-Open http://localhost:3000.
+Open [localhost:3000](http://localhost:3000).
 
-### Production configuration
+The catalog requires a configured Shopify connection. This repository does not currently provide a standalone mock-data demo. Matching metafields and content definitions are described in the [technical guide](docs/technical-guide.md). Client credentials are not included.
 
-The public storefront uses https://wantafc.com.
-
-In Vercel's production environment, set:
-
-```dotenv
-NEXT_PUBLIC_SITE_URL=https://wantafc.com
-```
-
-Create a new deployment after changing environment variables so the updated configuration is applied.
-
-## Commands
-
-| Command                | Purpose                                     |
-| ---------------------- | ------------------------------------------- |
-| `npm run dev`          | Start the development server                |
-| `npm run build`        | Create the production build using Webpack   |
-| `npm run start`        | Serve the existing production build         |
-| `npm run lint`         | Run ESLint; warnings fail the check         |
-| `npm run format`       | Check formatting without modifying files    |
-| `npm run format:write` | Apply Prettier formatting                   |
-| `npm run typecheck`    | Check TypeScript types                      |
-| `npm run ci`           | Run lint, formatting, type checks and build |
-
-**`npm run ci` does not run Playwright tests.** Run those separately.
-
-To run the production build locally:
+<details>
+<summary>Checks and test commands</summary>
 
 ```bash
-npm run build
-npm run start
-```
+# Lint, formatting, TypeScript and production build
+npm run ci
 
-## Tests
-
-### Install browsers
-
-Before the first browser test run:
-
-```bash
-npx playwright install --with-deps
-```
-
-### Unit tests
-
-```bash
+# Unit tests (separate from npm run ci)
 npx playwright test --config=playwright.unit.config.ts
-```
 
-Unit tests are located in `tests/unit/` and cover catalog filtering and Shopify HTML sanitization.
+# Install browsers before the first browser test run
+npx playwright install --with-deps
 
-### Browser tests
-
-Run the browser suite:
-
-```bash
+# Browser suite
 npx playwright test
-```
 
-Run an individual test file:
-
-```bash
-npx playwright test tests/shop.spec.ts
-```
-
-Open the HTML report:
-
-```bash
+# Open the browser test report
 npx playwright show-report
 ```
 
-The browser configuration includes:
+See the [technical guide](docs/technical-guide.md) for all commands, environment configuration and CI details. Its production-domain instructions describe the original client storefront; use your own deployment URL for a separate portfolio deployment.
 
-- Desktop Chrome
-- Desktop Firefox
-- Mobile Safari
-- Mobile Chrome
+</details>
 
-Locally, Playwright starts the development server or reuses an existing server on port 3000. In CI, it starts the production server, so a successful build is required first.
+## Project status and attribution
 
-Browser tests use Shopify-backed content. Changes to product names, availability, relationships or catalog data can affect test expectations.
+The original application was delivered to Arabian Fragrance Company Ltd Oy. This repository preserves my implementation for portfolio presentation and further development independently of the client's repository.
 
-### GitHub Actions
+The linked client website is a live commercial store. A separate portfolio deployment should use its own configuration and disable real purchases.
 
-The workflow runs on pull requests and pushes to `main`.
+Development and storefront implementation: **Juan Esteban Pelaez Hoyos**. Brand identity, product photography and other supplied brand assets are credited to their respective owners and contributors.
 
-It performs:
-
-1. Dependency installation
-2. Lint
-3. Formatting checks
-4. TypeScript checks
-5. Unit tests
-6. Production build
-7. Browser tests in `tests/shop.spec.ts` and `tests/responsive.spec.ts`
-
-The workflow currently runs a subset of the browser suite, not every browser test file.
-
-The following repository secrets are required:
-
-- `SHOPIFY_STORE_DOMAIN`
-- `SHOPIFY_STOREFRONT_ACCESS_TOKEN`
-
-Playwright reports and test results are uploaded as workflow artifacts and retained for seven days.
-
-## Project structure
-
-| Path                        | Responsibility                                                                                   |
-| --------------------------- | ------------------------------------------------------------------------------------------------ |
-| `app/[locale]/`             | Localized storefront routes and page metadata                                                    |
-| `app/api/checkout/route.ts` | Create a Shopify cart and return its checkout URL                                                |
-| `components/`               | Layout, navigation, catalog, product and page components                                         |
-| `lib/shopify/`              | Shopify queries, fetcher and product mapping                                                     |
-| `lib/shop/`                 | Catalog definitions, filtering and search logic                                                  |
-| `data/products.ts`          | Shared `Product` and `Note` types and `VALID_NOTES`; the product catalog is fetched from Shopify |
-| `lib/cart/store.ts`         | Zustand shopping bag and browser persistence                                                     |
-| `lib/i18n/uiLabels.ts`      | Shared interface labels                                                                          |
-| `dictionaries/`             | Localized page text and fallback content                                                         |
-| `i18n-config.ts`            | Supported locales and default locale                                                             |
-| `public/`                   | Local images, logos and fonts                                                                    |
-| `tests/`                    | Browser tests                                                                                    |
-| `tests/unit/`               | Unit tests                                                                                       |
-
-## Editing content
-
-This is a custom Next.js storefront. Shopify's theme editor does not control its layout.
-
-Edit connected content in Shopify. Modify components and styles in this repository to change the storefront's presentation or behavior.
-
-| Content                                                       | Where to edit                                                                 |
-| ------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| Product titles, descriptions, prices, images and availability | Shopify products                                                              |
-| Product notes, concentration, ingredients and layering        | Shopify product metafields                                                    |
-| Collection titles, descriptions and images                    | Shopify collections                                                           |
-| Homepage collection descriptions and button labels            | Collection metafields `custom.home_subtitle` and `custom.home_button_label`   |
-| Homepage hero                                                 | Metaobject `home_hero`, entry `homepage`                                      |
-| Homepage section headings                                     | Metaobject `home_section`, entries `categories`, `collections` and `featured` |
-| Homepage promotional sections                                 | Metaobject `home_promotion`, entries `discovery`, `showroom` and `about`      |
-| Our Story page                                                | Metaobject `about_page`, entry `our-story`                                    |
-| Showroom page                                                 | Metaobject `showroom_page`, entry `helsinki`                                  |
-| Footer social links                                           | Shopify menu with handle `footer-social`                                      |
-| FAQ                                                           | Shopify page with handle `faq`                                                |
-| Cookies Policy                                                | Shopify page with handle `cookies-policy`                                     |
-| Shipping, refunds, privacy and terms                          | Shopify Settings → Policies                                                   |
-| Contact page text                                             | `dictionaries/`                                                               |
-| Contact page email                                            | `CONTACT_EMAIL` in `app/[locale]/contact/page.tsx`                            |
-| Other interface labels and fallback text                      | `lib/i18n/uiLabels.ts` and `dictionaries/`                                    |
-
-Homepage promotions and their corresponding detail pages are independent content entries. Editing the homepage's Our Story or Showroom introduction does not update the full page.
-
-### Content requirements
-
-- Preserve the handles and field keys expected by the code.
-- Metaobjects must be active where applicable and accessible through the Storefront API.
-- Pages must be published and contain a title and body.
-- Image fields must reference images accessible to the storefront.
-- Hero and promotion button links must use internal paths, such as `/shop/discovery`. The application adds the locale.
-- Translate Shopify content separately from the repository's interface dictionaries.
-- Many Shopify requests use a 300-second revalidation interval. Content changes may not appear immediately.
-
-The exact fields for each content type are defined in its corresponding `lib/shopify/get-*.ts` file.
-
-### Footer social links
-
-Edit the Shopify menu with handle `footer-social`.
-
-Add, remove or reorder its links to update the social links displayed in the footer. Each item needs a title and a valid HTTP or HTTPS URL.
-
-### Catalog classification
-
-The catalog uses these product types:
-
-- `Perfume`
-- `Attar`
-- `Body Mist`
-- `Discovery Set`
-
-Collection handles are mapped in `lib/shop/catalogs.ts`. These include:
-
-| Catalog       | Shopify collection handle |
-| ------------- | ------------------------- |
-| Perfumes      | `perfumes`                |
-| Women         | `women-perfumes`          |
-| Men           | `men-perfumes`            |
-| Unisex        | `unisex-perfumes`         |
-| Luxury        | `luxury-collection`       |
-| Premium       | `premium-collection`      |
-| Essential     | `essential-collection`    |
-| Oils & Attars | `oils-attars`             |
-| Body Mists    | `bath-body`               |
-| Discovery     | `discovery`               |
-
-Filtering uses original English classification values to keep behavior consistent across locales.
-
-The heart-notes metafield is currently spelled `custom.hearth_notes` in the integration. Preserve this key unless Shopify and the queries are updated together.
-
-The main product-list query currently loads up to 100 products. Review pagination before expanding beyond that limit.
-
-## Shopping bag and checkout
-
-Shopping bag items are persisted in browser local storage under `af-cart-v1`.
-
-The checkout endpoint creates a Shopify cart from variant identifiers and quantities, then returns the Shopify checkout URL.
-
-Payment methods, shipping options, taxes and checkout settings are managed in Shopify. Footer payment icons are display assets and do not configure payment providers.
-
-Validate the available payment methods and delivery options in Shopify before enabling live sales.
-
-## Contact and browser storage
-
-The Contact page uses email links. It does not submit messages through a backend contact form.
-
-No newsletter subscription integration is currently included.
-
-The cookie banner stores its selection in local storage under `cookie_consent`. It does not currently activate or manage analytics or advertising tools. Review the banner behavior and policy before adding tracking.
-
-## Deployment and maintenance
-
-Configure the Shopify environment variables in the hosting environment before building.
-
-Use `https://wantafc.com` as `NEXT_PUBLIC_SITE_URL` for the production storefront.
-
-The current metadata and robots configuration enables indexing when `VERCEL_ENV` is `production` and disables it otherwise. Review this behavior if deploying outside Vercel.
-
-Before releasing changes:
-
-- Run the checks and relevant tests.
-- Review the preview deployment on desktop and mobile.
-- Check affected locales, links and Shopify content.
-- Validate checkout separately when changing payments, shipping or checkout configuration.
-
-The Storefront API version is currently hardcoded in `lib/shopify/shopify.ts`. Review and maintain it as Shopify API versions change.
-
-Magister and Bodoni Moda are loaded from local font files. Other fonts still use `next/font/google`, which requires access to Google Fonts during compilation.
-
-## Troubleshooting
-
-### Missing or fallback editorial content
-
-Check the metaobject handle, required fields, active status and Storefront access. Inspect server logs for the relevant query error.
-
-### FAQ or Cookies Policy returns 404
-
-Check the page's publication status, exact handle and non-empty title/body. Allow for cached responses after publishing.
-
-### Catalog is empty or products appear in the wrong category
-
-Check product publication, product type, gender metafield and collection membership against `lib/shop/catalogs.ts`.
-
-### A Playwright navigation assertion times out
-
-Inspect the report and trace. Check whether navigation failed or the destination is still loading. Do not replace the interaction with direct navigation just to make the test pass.
-
-### Build fails while processing a Google Font
-
-Check the failing font in the build output. Bodoni Moda is already loaded locally; other Google-hosted fonts may still require investigation.
-
-## Visual design
-
-Colors, typography, page layouts, and responsive behavior are defined in the Next.js codebase. Shopify’s theme editor does not control this storefront.
-
-Content connected to Shopify—such as products, editorial text, images, policies, and social links—can be updated from the Shopify admin. Changes to the visual design require code changes and a new deployment through Vercel.
-
-## License
-
-See [LICENSE](LICENSE) for the repository's usage restrictions.
+See [LICENSE](LICENSE) for the existing usage restrictions.
