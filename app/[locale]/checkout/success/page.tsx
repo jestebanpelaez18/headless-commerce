@@ -1,48 +1,11 @@
-import Link from "next/link";
-import { ClearCartOnSuccess } from "@/components/cart/ClearCartOnSuccess";
-import { getDictionary } from "@/dictionaries/getDictionary";
+import { redirect } from "next/navigation";
 import type { Locale } from "@/i18n-config";
-
-export const dynamic = "force-dynamic";
-
-type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 export default async function SuccessPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: Locale }>;
-  searchParams: SearchParams;
 }) {
   const { locale } = await params;
-  const dict = await getDictionary(locale);
-
-  const sp = await searchParams;
-  const rawOrder = sp?.order;
-  const orderRef = Array.isArray(rawOrder) ? rawOrder[0] : rawOrder;
-
-  return (
-    <main className="mx-auto max-w-xl space-y-4 px-4 py-16 text-center">
-      <ClearCartOnSuccess />
-
-      <h1 className="text-3xl font-semibold">{dict.checkout.thankYou}</h1>
-      <p className="text-white/80">
-        {orderRef ? (
-          <>
-            {dict.checkout.order} <span className="font-mono">{orderRef}</span>{" "}
-            {dict.checkout.orderConfirmedSuffix}
-          </>
-        ) : (
-          dict.checkout.paymentReceived
-        )}
-      </p>
-
-      <Link
-        href={`/${locale}/shop`}
-        className="inline-block rounded-full px-6 py-3 ring-1 ring-white/15 hover:bg-white/5"
-      >
-        {dict.checkout.continueShopping}
-      </Link>
-    </main>
-  );
+  redirect(`/${locale}/bag`);
 }

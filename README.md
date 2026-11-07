@@ -23,7 +23,7 @@ I was responsible for the storefront application and its Shopify integration, in
 - Translating the brand direction into responsive page layouts, navigation and reusable components.
 - Structuring product data and metafields for fragrance notes, concentration, ingredients and product relationships.
 - Implementing catalog browsing, URL-based filters, ranked search, product recommendations and fragrance layering sections.
-- Building the persistent shopping bag and the server endpoint that creates the checkout flow through Shopify's Cart API.
+- Building the persistent shopping bag and a demo-safe checkout endpoint that stays disabled in this portfolio copy.
 - Connecting homepage sections, brand pages, policies and social links to editable Shopify content.
 - Implementing English, Finnish and Swedish routes, localized interface text and product metadata.
 - Adding automated checks, unit and browser tests, deployment configuration and technical documentation for handover.
@@ -39,7 +39,7 @@ My wider work with the business included catalog preparation, product informatio
 | Search            | Ranked matches across names, fragrance notes, collections, product types and gender, with aliases across the supported languages |
 | Product pages     | Image galleries, fragrance notes, concentration, ingredients, layering suggestions and related products                          |
 | Shopping bag      | Persistent quantities and subtotals, with drawer and full-page views                                                             |
-| Checkout          | Server-created Shopify cart followed by Shopify-hosted checkout                                                                  |
+| Checkout          | Portfolio-safe disabled checkout (purchases intentionally blocked)                                                               |
 | Editorial content | Shopify-managed homepage sections, Our Story, showroom information, FAQ, policies and social links                               |
 | Localization      | English, Finnish and Swedish routes, UI labels and Shopify content queries                                                       |
 
@@ -66,7 +66,7 @@ My wider work with the business included catalog preparation, product informatio
 
 ### A custom storefront with Shopify-managed commerce
 
-Next.js owns the interface, routes and presentation. Shopify provides catalog data, product relationships, editable content and checkout. The integration uses GraphQL queries, product mapping functions and dedicated content readers rather than coupling components directly to a Shopify theme.
+Next.js owns the interface, routes and presentation. Shopify provides catalog data, product relationships and editable content. The integration uses GraphQL queries, product mapping functions and dedicated content readers rather than coupling components directly to a Shopify theme.
 
 Server-rendered routes fetch product and editorial content. Client components handle interactions such as filter panels, search overlays and the shopping bag.
 
@@ -88,9 +88,9 @@ Shopify metaobjects supply structured content for the homepage, Our Story and sh
 
 Colors, typography and responsive layouts remain in the codebase, so content editing and visual design have clear responsibilities.
 
-### A small client-side bag with server-created checkout
+### A small client-side bag with demo-safe checkout
 
-Zustand persists the shopping bag in browser storage. At checkout, the frontend sends variant identifiers and quantities to a Next.js route handler, which creates a Shopify cart and returns its checkout URL. Payment collection is handled by Shopify's hosted checkout.
+Zustand persists the shopping bag in browser storage. In this portfolio repository, checkout requests are intentionally blocked and return a disabled-demo response so no real purchase flow can start.
 
 ## Technology
 
@@ -127,7 +127,7 @@ These files are useful starting points for reviewing the implementation:
 | [`lib/shopify/mapper.ts`](lib/shopify/mapper.ts)                 | Converting Shopify fields into the shared product model |
 | [`lib/shopify/get-about-page.ts`](lib/shopify/get-about-page.ts) | Reading structured editorial content from Shopify       |
 | [`lib/cart/store.ts`](lib/cart/store.ts)                         | Shopping bag state and persistence                      |
-| [`app/api/checkout/route.ts`](app/api/checkout/route.ts)         | Creating a Shopify cart from variant IDs and quantities |
+| [`app/api/checkout/route.ts`](app/api/checkout/route.ts)         | Blocking checkout in the portfolio demo with HTTP 403   |
 | [`lib/sanitize-shopify-html.ts`](lib/sanitize-shopify-html.ts)   | Sanitizing Shopify page and policy HTML                 |
 | [`tests/unit/`](tests/unit/)                                     | Isolated catalog and sanitization tests                 |
 | [`tests/responsive.spec.ts`](tests/responsive.spec.ts)           | Responsive navigation regression tests                  |

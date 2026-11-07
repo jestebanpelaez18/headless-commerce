@@ -4,7 +4,7 @@ This guide preserves the development and maintenance documentation for the origi
 
 Custom headless storefront for Arabian Fragrance, built with Next.js and Shopify Storefront API.
 
-Shopify manages the catalog and editable store content. This repository manages the storefront design, navigation, filtering, search and shopping bag. Checkout is created through Shopify and completed on Shopify's hosted checkout.
+Shopify manages the catalog and editable store content. This repository manages the storefront design, navigation, filtering, search and shopping bag. In this portfolio copy, checkout is intentionally disabled and no purchase can be completed.
 
 **Website:** https://wantafc.com  
 **Hosting:** Vercel
@@ -177,7 +177,7 @@ Playwright reports and test results are uploaded as workflow artifacts and retai
 | Path                        | Responsibility                                                                                   |
 | --------------------------- | ------------------------------------------------------------------------------------------------ |
 | `app/[locale]/`             | Localized storefront routes and page metadata                                                    |
-| `app/api/checkout/route.ts` | Create a Shopify cart and return its checkout URL                                                |
+| `app/api/checkout/route.ts` | Return HTTP 403 to keep checkout disabled in the portfolio demo                                  |
 | `components/`               | Layout, navigation, catalog, product and page components                                         |
 | `lib/shopify/`              | Shopify queries, fetcher and product mapping                                                     |
 | `lib/shop/`                 | Catalog definitions, filtering and search logic                                                  |
@@ -269,9 +269,9 @@ The main product-list query currently loads up to 100 products. Review paginatio
 
 Shopping bag items are persisted in browser local storage under `af-cart-v1`.
 
-The checkout endpoint creates a Shopify cart from variant identifiers and quantities, then returns the Shopify checkout URL.
+The checkout endpoint always returns HTTP 403 with a portfolio-demo message. It does not create Shopify carts or start a checkout session.
 
-Payment methods, shipping options, taxes and checkout settings are managed in Shopify. Footer payment icons are display assets and do not configure payment providers.
+Payment methods, shipping options, taxes and checkout settings are managed in Shopify in the original client deployment. Footer payment icons are display assets and do not configure payment providers.
 
 Validate the available payment methods and delivery options in Shopify before enabling live sales.
 
@@ -296,7 +296,7 @@ Before releasing changes:
 - Run the checks and relevant tests.
 - Review the preview deployment on desktop and mobile.
 - Check affected locales, links and Shopify content.
-- Validate checkout separately when changing payments, shipping or checkout configuration.
+- Validate checkout disabling behavior (button state and `POST /api/checkout` returning 403) after checkout-related changes.
 
 The Storefront API version is currently hardcoded in `lib/shopify/shopify.ts`. Review and maintain it as Shopify API versions change.
 

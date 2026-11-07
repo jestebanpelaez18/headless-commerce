@@ -112,6 +112,7 @@ type UiLabels = {
       checkout: string;
       checkoutLoading: string;
       checkoutError: string;
+      checkoutDisabledMessage: string;
       closeCart: string;
       close: string;
       viewBag: string;
@@ -332,6 +333,7 @@ const uiLabels: Record<Locale, UiLabels> = {
         checkout: "Checkout",
         checkoutLoading: "Redirecting…",
         checkoutError: "We could not open checkout. Please try again.",
+        checkoutDisabledMessage: "Portfolio demo — purchases are disabled.",
         closeCart: "Close cart",
         close: "Close",
         viewBag: "View Bag",
@@ -561,6 +563,8 @@ const uiLabels: Record<Locale, UiLabels> = {
         checkout: "Kassa",
         checkoutLoading: "Siirrytään kassalle…",
         checkoutError: "Kassaa ei voitu avata. Yritä uudelleen.",
+        checkoutDisabledMessage:
+          "Portfolio-demo — ostot on poistettu käytöstä.",
         closeCart: "Sulje ostoskori",
         close: "Sulje",
         viewBag: "Näytä ostoskori",
@@ -790,6 +794,7 @@ const uiLabels: Record<Locale, UiLabels> = {
         checkout: "Kassa",
         checkoutLoading: "Öppnar kassan…",
         checkoutError: "Det gick inte att öppna kassan. Försök igen.",
+        checkoutDisabledMessage: "Portfolio-demo — köp är inaktiverade.",
         closeCart: "Stäng varukorgen",
         close: "Stäng",
         viewBag: "Visa varukorg",
