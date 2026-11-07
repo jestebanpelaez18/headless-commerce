@@ -4,7 +4,11 @@ A custom, multilingual e-commerce application built for Arabian Fragrance, a per
 
 **Developer:** [Juan Esteban Pelaez Hoyos](https://github.com/jestebanpelaez18) · **Role:** Full Stack Developer
 
-[Client website](https://wantafc.com) · [Technical guide](docs/technical-guide.md) · [Code walkthrough](#code-walkthrough)
+[Live demo](https://headless-commerce-ten.vercel.app) · [Client website](https://wantafc.com) · [Technical guide](docs/technical-guide.md) · [Code walkthrough](#code-walkthrough)
+
+**Live demo:** My portfolio version. Browsing and shopping bag interactions are available; checkout is disabled.
+
+**Client website:** The commercial storefront delivered to Arabian Fragrance. Maintained separately by the client and may differ from this portfolio version.
 
 This repository is my portfolio copy of the project delivered to the client. The client website is maintained separately and may evolve beyond the version shown here.
 
